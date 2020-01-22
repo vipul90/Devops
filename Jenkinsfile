@@ -35,16 +35,6 @@ stages
 			sh "dotnet clean"	 
 		}
     }
-	stage ('Starting Sonarqube analysis')
-	{
-		steps
-		{
-			withSonarQubeEnv('Test_Sonar')
-			{
-				sh '''dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /k:$JOB_NAME /n:$JOB_NAME /v:1.0'''   
-			}
-		}
-	}
 	stage ('Building Code')
 	{
 		steps
@@ -52,21 +42,41 @@ stages
 			sh "dotnet build -c Release -o DevopsApp/app/build"
 		}	
 	}
-	stage ('Ending SonarQube Analysis')
-	{	
-		steps
-		{
-		    withSonarQubeEnv('Test_Sonar')
-			{
-				sh '''dotnet ${scannerHome}//SonarScanner.MSBuild.dll end'''
-			}
-		}
-	}
 	stage ('Release Artifacts')
 	{
 	    steps
 	    {
 	        sh "dotnet publish -c Release -o DevopsApp/app/publish"
+	    }
+	}
+	
+	stage ('Docker Image')
+	{
+		steps
+		{
+		    sh returnStdout: true, script: '/bin/docker build --no-cache -t devopsApp_vipulchohan:${BUILD_NUMBER} .'
+		}
+	}
+	
+	stage ('Stop Running container')
+	{
+	    steps
+	    {
+	        sh '''
+                ContainerID=$(docker ps | grep 5400 | cut -d " " -f 1)
+                if [  $ContainerID ]
+                then
+                    docker stop $ContainerID
+                    docker rm -f $ContainerID
+                fi
+            '''
+	    }
+	}
+	stage ('Docker deployment')
+	{
+	    steps
+	    {
+	       sh 'docker run --name devopsAppRun -d -p 5400:80 devopsApp_vipulchohan:${BUILD_NUMBER}'
 	    }
 	}
 	
