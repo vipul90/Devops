@@ -14,27 +14,33 @@ options
      
 stages
 {
-	stage ('checkout')
-    {
-		steps
-		{
-			echo  " ********** Clone starts ******************"
-		    checkout scm	 
-		}
-    }
-    stage ('nuget')
+	 stage ('Restoring Nuget')
     {
 		steps
 		{
 			sh "dotnet restore"	 
 		}
     }
-	stage ('build')
+	stage ('Clean Code')
+    {
+		steps
+		{
+			sh "dotnet clean"	 
+		}
+    }
+	stage ('Building Code')
 	{
 		steps
 		{
-			sh "dotnet build -c Release -o WebApplication4/app/build"
+			sh "dotnet build -c Release -o DevopsApp/app/build"
 		}	
+	}
+	stage ('Release Artifacts')
+	{
+	    steps
+	    {
+	        sh "dotnet publish -c Release -o DevopsApp/app/publish"
+	    }
 	}
 	
 }
