@@ -54,7 +54,7 @@ stages
 	{
 		steps
 		{
-		    sh returnStdout: true, script: 'docker build --no-cache -t devopsApp_vipulchohan:${BUILD_NUMBER} .'
+		    sh returnStdout: true, script: 'docker build --no-cache -t devopsapp_vipulchohan:${BUILD_NUMBER} .'
 		}
 	}
 	
@@ -76,7 +76,7 @@ stages
 	{
 	    steps
 	    {
-	       sh 'docker run --name devopsAppRun -d -p 5400:80 devopsApp_vipulchohan:${BUILD_NUMBER}'
+	       sh 'docker run --name devopsAppRun -d -p 5400:80 devopsapp_vipulchohan:${BUILD_NUMBER}'
 	    }
 	}
 	
