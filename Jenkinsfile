@@ -1,7 +1,6 @@
 pipeline{
 	agent any
-
-
+	
 options
    {
       timeout(time: 1, unit: 'HOURS')
@@ -30,7 +29,13 @@ stages
 			sh "dotnet restore"	 
 		}
     }
-	
+	stage ('build')
+	{
+		steps
+		{
+			sh "dotnet build -c Release -o WebApplication4/app/build"
+		}	
+	}
 	
 }
 
