@@ -41,7 +41,7 @@ stages
 		{
 			withSonarQubeEnv('Test_Sonar')
 			{
-				sh "dotnet D:/SonarQube/SonarScanner.MSBuild.dll begin /k:$JOB_NAME /n:$JOB_NAME /v:1.0 "
+				sh "dotnet D:/SonarQube/SonarScanner.MSBuild.dll begin /key:$JOB_NAME /name:$JOB_NAME /version:1.0"
 			}
 		}
 	}
@@ -58,7 +58,7 @@ stages
 		{
 		    withSonarQubeEnv('Test_Sonar')
 			{
-				sh '''dotnet ${scannerHome}/SonarScanner.MSBuild.dll end'''
+				sh "dotnet D:/SonarQube/SonarScanner.MSBuild.dll end"
 			}
 		}
 	}
