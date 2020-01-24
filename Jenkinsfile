@@ -4,9 +4,7 @@ pipeline{
 
 environment
 {
-	jdk = tool name: 'jdk13'
     scannerHome = 'D:/SonarQube'   
-	env.JAVA_HOME = $(jdk)
 }
 	
 options
@@ -24,6 +22,14 @@ options
      
 stages
 {
+	stage ('Checkout Branch')
+    {
+		steps
+		{
+		    checkout scm	 
+		}
+    }
+
 	 stage ('Restoring Nuget')
     {
 		steps
@@ -35,6 +41,7 @@ stages
     {
 		steps
 		{
+			echo "${env.JAVA_HOME}"
 			sh "dotnet clean"	 
 		}
     }
