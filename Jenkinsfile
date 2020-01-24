@@ -18,7 +18,6 @@ options
 	  disableConcurrentBuilds()
    }
    
-  
      
 stages
 {
@@ -41,7 +40,7 @@ stages
     {
 		steps
 		{
-			echo "${env.JAVA_HOME}"
+			
 			sh "dotnet clean"	 
 		}
     }
@@ -51,6 +50,7 @@ stages
 		{
 			withSonarQubeEnv('Test_Sonar')
 			{
+				echo "${scannerHome}"
 				sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /key:$JOB_NAME /name:$JOB_NAME /version:1.0"
 			}
 		}
