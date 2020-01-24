@@ -50,7 +50,7 @@ stages
 		{
 			withSonarQubeEnv('Test_Sonar')
 			{
-				echo "${scannerHome}"
+				echo "\${scannerHome}"
 				echo "$(scannerHome)"
 				sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /key:$JOB_NAME /name:$JOB_NAME /version:1.0"
 			}
