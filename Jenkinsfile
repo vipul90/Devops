@@ -3,7 +3,7 @@ pipeline{
 
 environment
 {
-    scannerHome = 'D:/SonarQube'   
+    scannerHome = 'C:/Program\ Files\ \(x86\)/Jenkins/tools/hudson.plugins.sonar.MsBuildSQRunnerInstallation'   
 }
 	
 options
