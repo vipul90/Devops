@@ -79,6 +79,13 @@ stages
                     docker stop $ContainerID
                     docker rm -f $ContainerID
                 fi
+				
+				ContainerIDByName=$(docker ps | grep devopsAppRun | cut -d " " -f 1)
+                if [  $ContainerIDByName ]
+                then
+                    docker stop $ContainerIDByName
+                    docker rm -f $ContainerIDByName
+                fi
             '''
 	    }
 	}
