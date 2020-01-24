@@ -35,7 +35,16 @@ stages
 			sh "dotnet clean"	 
 		}
     }
-	
+	stage ('Starting Sonarqube analysis')
+	{
+		steps
+		{
+			withSonarQubeEnv('Test_Sonar')
+			{
+				sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /key:$JOB_NAME /name:$JOB_NAME /version:1.0"
+			}
+		}
+	}
 	stage ('Building Code')
 	{
 		steps
@@ -43,7 +52,16 @@ stages
 			sh "dotnet build -c Release -o DevopsApp/app/build"
 		}	
 	}
-	
+	stage ('Ending SonarQube Analysis')
+	{	
+		steps
+		{
+		    withSonarQubeEnv('Test_Sonar')
+			{
+				sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll end"
+			}
+		}
+	}
 	stage ('Release Artifacts')
 	{
 	    steps
