@@ -3,6 +3,7 @@ pipeline{
 
 environment
 {
+	jdk = tool name: 'JDK17'
     scannerHome = 'D:/SonarQube'   
 	env.JAVA_HOME = "${jdk}"
 }
