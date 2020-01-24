@@ -73,19 +73,23 @@ stages
 	    steps
 	    {
 	        sh '''
+				ContainerIDByName=$(docker ps | grep devopsAppRun | cut -d " " -f 1)
+                if [  $ContainerIDByName ]
+                then
+					echo "Inside ContainerIDByName"
+                    docker stop $ContainerIDByName
+                    docker rm -f $ContainerIDByName
+                fi
+			
                 ContainerID=$(docker ps | grep 5400 | cut -d " " -f 1)
                 if [  $ContainerID ]
                 then
+					echo "Inside ContainerID"
                     docker stop $ContainerID
                     docker rm -f $ContainerID
                 fi
 				
-				ContainerIDByName=$(docker ps | grep devopsAppRun | cut -d " " -f 1)
-                if [  $ContainerIDByName ]
-                then
-                    docker stop $ContainerIDByName
-                    docker rm -f $ContainerIDByName
-                fi
+				
             '''
 	    }
 	}
