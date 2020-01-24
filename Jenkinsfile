@@ -53,7 +53,7 @@ stages
 			withSonarQubeEnv('Test_Sonar')
 			{
 				echo "${testPath}"
-				sh "dotnet ${testPath} begin /key:$JOB_NAME /name:$JOB_NAME /version:1.0"
+				sh "dotnet ${\"testPath\"} begin /key:$JOB_NAME /name:$JOB_NAME /version:1.0"
 			}
 		}
 	}
