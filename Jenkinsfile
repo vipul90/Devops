@@ -4,7 +4,7 @@ pipeline{
 
 environment
 {
-    scannerHome = 'D:/SonarQube'   
+    scannerHome = tool name: 'sonar_scanner_dotnet', type: 'hudson.plugins.sonar.MsBuildSQRunnerInstallation'   
 }
 	
 options
