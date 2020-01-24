@@ -4,9 +4,7 @@ pipeline{
 
 environment
 {
-    scannerHome = tool name: 'sonar_scanner_dotnet', type: 'hudson.plugins.sonar.MsBuildSQRunnerInstallation' 
-	testVar = "SonarScanner.MSBuild.dll"
-	testPath = "${scannerHome}\\${testVar}"
+    scannerHome = 'D:/SonarQube'   
 }
 	
 options
@@ -20,6 +18,7 @@ options
 	  disableConcurrentBuilds()
    }
    
+  
      
 stages
 {
@@ -42,7 +41,7 @@ stages
     {
 		steps
 		{
-			
+			echo "${env.JAVA_HOME}"
 			sh "dotnet clean"	 
 		}
     }
@@ -52,8 +51,7 @@ stages
 		{
 			withSonarQubeEnv('Test_Sonar')
 			{
-				echo "${testPath}"
-				sh '''dotnet ${testPath} begin /key:$JOB_NAME /name:$JOB_NAME /version:1.0'''
+				sh "dotnet ${scannerHome}/SonarScanner.MSBuild.dll begin /key:$JOB_NAME /name:$JOB_NAME /version:1.0"
 			}
 		}
 	}
