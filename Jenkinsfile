@@ -1,11 +1,12 @@
 pipeline{
 	agent any
 
+
 environment
 {
-	jdk = tool name: 'JDK13'
+	jdk = tool name: 'jdk13'
     scannerHome = 'D:/SonarQube'   
-	env.JAVA_HOME = "${jdk}"
+	env.JAVA_HOME = $(jdk)
 }
 	
 options
